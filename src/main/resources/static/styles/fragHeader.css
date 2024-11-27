@@ -1,0 +1,19 @@
+.navbar-custom {
+    background-color: #007bff;
+}
+.navbar-custom .navbar-brand,
+.navbar-custom .nav-link,
+.navbar-custom .form-control {
+    color: white;
+}
+.navbar-custom .btn {
+    color: #007bff;
+    background-color: white;
+}
+.navbar-custom .btn:hover {
+    color: white;
+    background-color: #0056b3;
+}
+.nav-item {
+    padding-right: 10px;
+}

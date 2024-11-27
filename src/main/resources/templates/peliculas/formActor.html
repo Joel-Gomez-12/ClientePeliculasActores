@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Formulario de Actor</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container my-5">
+    <h1 th:text="${actor.idActor == null ? 'Crear Actor' : 'Editar Actor'}"></h1>
+    <form th:action="@{/pactores/guardar}" th:object="${actor}" method="post" enctype="multipart/form-data">
+        <input type="hidden" th:field="*{idActor}" />
+        <div class="mb-3">
+            <label for="nombre" class="form-label">Nombre del actor:</label>
+            <input type="text" id="nombre" th:field="*{nombre}" class="form-control" required />
+            <div th:if="${#fields.hasErrors('nombre')}" class="text-danger">
+                <p th:errors="*{nombre}"></p>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label for="fechaNacimiento" class="form-label">Fecha de nacimiento:</label>
+            <input type="date" id="fechaNacimiento" th:field="*{fechaNacimiento}" class="form-control" required />
+            <div th:if="${#fields.hasErrors('fechaNacimiento')}" class="text-danger">
+                <p th:errors="*{fechaNacimiento}"></p>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label for="paisNacimiento" class="form-label">País de nacimiento:</label>
+            <input type="text" id="paisNacimiento" th:field="*{paisNacimiento}" class="form-control" required />
+            <div th:if="${#fields.hasErrors('paisNacimiento')}" class="text-danger">
+                <p th:errors="*{paisNacimiento}"></p>
+            </div>
+        </div>
+
+        <!-- Campo oculto para mantener las asociaciones de películas -->
+        <div th:each="pelicula, iterStat : ${actor.peliculas}">
+            <input type="hidden" th:field="*{peliculas[__${iterStat.index}__].idPelicula}" th:value="${pelicula.idPelicula}" />
+        </div>
+
+
+        <button type="submit" class="btn btn-primary">Guardar</button>
+
+
+    </form>
+    <hr>
+    <a th:href="@{/ppeliculas/listado}" class="btn btn-secondary">Cancelar</a>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

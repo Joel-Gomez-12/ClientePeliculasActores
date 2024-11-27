@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Detalles del Actor</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container my-5">
+    <div class="card mx-auto" style="max-width: 600px;">
+        <div class="card-body">
+            <h3 class="card-title" th:text="${actor.nombre}"></h3>
+            <p><strong>País de Nacimiento:</strong> <span th:text="${actor.paisNacimiento}"></span></p>
+            <p><strong>Fecha de Nacimiento:</strong> <span th:text="${actor.fechaNacimiento}"></span></p>
+        </div>
+        <div class="card-footer d-flex justify-content-between">
+            <a th:href="@{/ppeliculas/listado}" class="btn btn-secondary">Volver a Películas</a>
+        </div>
+    </div>
+    <div class="card-footer d-flex justify-content-between">
+        <a th:href="@{/pactores/editar/{id}(id=${actor.idActor})}" class="btn btn-primary">Editar</a>
+        <a th:href="@{/pactores/borrar/{id}(id=${actor.idActor})}" class="btn btn-danger"
+           onclick="return confirm('¿Está seguro de que desea eliminar esta actor?')">Eliminar</a>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

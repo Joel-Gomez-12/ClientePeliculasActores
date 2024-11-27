@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Formulario de Película</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container my-5">
+  <h1 th:text="${pelicula.idPelicula == null ? 'Crear Película' : 'Editar Película'}"></h1>
+  <form th:action="@{/ppeliculas/guardar}" th:object="${pelicula}" method="post" enctype="multipart/form-data">
+    <input type="hidden" th:field="*{idPelicula}" />
+
+    <div class="mb-3">
+      <label for="titulo" class="form-label">Título:</label>
+      <input type="text" id="titulo" th:field="*{titulo}" class="form-control" required />
+      <div th:if="${#fields.hasErrors('titulo')}" class="text-danger">
+        <p th:errors="*{titulo}"></p>
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label for="anio" class="form-label">Año:</label>
+      <input type="number" id="anio" th:field="*{anio}" class="form-control" required />
+      <div th:if="${#fields.hasErrors('anio')}" class="text-danger">
+        <p th:errors="*{anio}"></p>
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label for="duracion" class="form-label">Duración (min):</label>
+      <input type="number" id="duracion" th:field="*{duracion}" class="form-control" required />
+      <div th:if="${#fields.hasErrors('duracion')}" class="text-danger">
+        <p th:errors="*{duracion}"></p>
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label for="pais" class="form-label">País:</label>
+      <input type="text" id="pais" th:field="*{pais}" class="form-control" required />
+      <div th:if="${#fields.hasErrors('pais')}" class="text-danger">
+        <p th:errors="*{pais}"></p>
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label for="direccion" class="form-label">Director:</label>
+      <input type="text" id="direccion" th:field="*{direccion}" class="form-control" required />
+      <div th:if="${#fields.hasErrors('direccion')}" class="text-danger">
+        <p th:errors="*{direccion}"></p>
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label for="genero" class="form-label">Género:</label>
+      <input type="text" id="genero" th:field="*{genero}" class="form-control" required />
+      <div th:if="${#fields.hasErrors('genero')}" class="text-danger">
+        <p th:errors="*{genero}"></p>
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label for="sinopsis" class="form-label">Sinopsis:</label>
+      <textarea id="sinopsis" th:field="*{sinopsis}" class="form-control" rows="3" required></textarea>
+      <div th:if="${#fields.hasErrors('sinopsis')}" class="text-danger">
+        <p th:errors="*{sinopsis}"></p>
+      </div>
+    </div>
+
+    <!-- Imagen existente -->
+    <div th:if="${pelicula.imagenPortada != null}">
+      <img th:src="@{/uploads/} + ${pelicula.imagenPortada}" class="img-thumbnail mb-3" style="max-width: 200px;" />
+      <p>Imagen actual</p>
+    </div>
+
+    <!-- Subir nueva imagen -->
+    <div class="mb-3">
+      <label for="imagen" class="form-label">Imagen de Portada:</label>
+      <input type="file" id="imagen" name="imagen" class="form-control" accept="image/*" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Guardar</button>
+    <a th:href="@{/ppeliculas/listado}" class="btn btn-secondary">Cancelar</a>
+  </form>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

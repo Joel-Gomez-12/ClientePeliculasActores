@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Detalles de Película</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Tu CSS desde la carpeta estática -->
+    <link type="text/css" th:href="@{/styles/detallepe.css}" rel="stylesheet">
+</head>
+<body>
+<div class="container my-5">
+    <!-- Tarjeta de Detalles -->
+    <div class="card mx-auto" style="max-width: 800px;">
+        <div class="card-body">
+            <h3 class="card-title" th:text="${pelicula.titulo}"></h3>
+
+            <p><strong>Año:</strong> <span th:text="${pelicula.anio}"></span></p>
+            <p><strong>Duración:</strong> <span th:text="${pelicula.duracion}"></span> minutos</p>
+            <p><strong>País:</strong> <span th:text="${pelicula.pais}"></span></p>
+            <p><strong>Director:</strong> <span th:text="${pelicula.direccion}"></span></p>
+            <p><strong>Reparto:</strong>
+            <ul>
+                <li th:each="actor : ${pelicula.actores}">
+                    <a th:href="@{/pactores/detalle/{id}(id=${actor.idActor})}" th:text="${actor.nombre}"></a>
+                </li>
+            </ul>
+            </p>
+            <p><strong>Género:</strong> <span th:text="${pelicula.genero}"></span></p>
+            <p><strong>Sinopsis:</strong></p>
+            <p th:text="${pelicula.sinopsis}"></p>
+
+        </div>
+
+        <div class="card-footer d-flex justify-content-between">
+            <a th:href="@{/ppeliculas/editar/{id}(id=${pelicula.idPelicula})}" class="btn btn-primary">Editar</a>
+            <a th:href="@{/ppeliculas/borrar/{id}(id=${pelicula.idPelicula})}" class="btn btn-danger"
+               onclick="return confirm('¿Está seguro de que desea eliminar esta película?')">Eliminar</a>
+        </div>
+
+    </div>
+    <a class="btn btn-primary" role="button" th:href="@{/ppeliculas/listado}">Volver al listado de peliculas</a>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
