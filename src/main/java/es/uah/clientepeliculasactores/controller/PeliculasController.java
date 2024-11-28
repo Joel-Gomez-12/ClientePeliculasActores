@@ -102,6 +102,31 @@ public class PeliculasController {
         return "peliculas/listPelicula";
     }
 
+    @GetMapping("/asociarp")
+    public String mostrarFormularioAsociacion(Model model) {
+        // Obtener todos los actores y películas disponibles
+        model.addAttribute("actores", actoresService.buscarTodos(PageRequest.of(0, Integer.MAX_VALUE)).getContent());
+        model.addAttribute("peliculas", peliculasService.buscarTodas(PageRequest.of(0, Integer.MAX_VALUE)).getContent());
+        model.addAttribute("titulo", "Asociar Actor a Película");
+        return "peliculas/formAsociar";
+    }
+
+    @PostMapping("/asociar")
+    public String procesarAsociacion(@RequestParam("actorId") Integer actorId,
+                                     @RequestParam("peliculaId") Integer peliculaId,
+                                     RedirectAttributes attributes) {
+        try {
+            actoresService.actuarPelicula(actorId, peliculaId);
+            attributes.addFlashAttribute("msg", "El actor fue asociado correctamente a la película!");
+            attributes.addFlashAttribute("msgType", "success");
+        } catch (Exception e) {
+            attributes.addFlashAttribute("msg", "Error al asociar el actor a la película: " + e.getMessage());
+            attributes.addFlashAttribute("msgType", "error");
+        }
+        return "redirect:/ppeliculas/listado";
+    }
+
+
     @PostMapping("/guardar")
     public String guardarPelicula(Model model, Pelicula pelicula,
                                   @RequestParam("imagen") MultipartFile imagen, RedirectAttributes attributes) {
@@ -109,7 +134,7 @@ public class PeliculasController {
         if (!imagen.isEmpty()) {
             try {
                 // Crear la ruta del archivo en el directorio de recursos estáticos
-                String filePath = new File("src/main/resources/s" + uploadDir + imagen.getOriginalFilename()).getAbsolutePath();
+                String filePath = new File("src/main/resources/static/uploads" + uploadDir + imagen.getOriginalFilename()).getAbsolutePath();
                 File destFile = new File(filePath);
 
                 // Crear directorios si no existen
@@ -132,6 +157,7 @@ public class PeliculasController {
         attributes.addFlashAttribute("msg", "Los datos de la película fueron guardados!");
         return "redirect:/ppeliculas/listado";
     }
+
 
     @GetMapping("/editar/{id}")
     public String editarPelicula(Model model, @PathVariable("id") Integer id) {
