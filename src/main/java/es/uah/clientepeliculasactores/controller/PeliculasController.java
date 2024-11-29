@@ -134,7 +134,7 @@ public class PeliculasController {
         if (!imagen.isEmpty()) {
             try {
                 // Crear la ruta del archivo en el directorio de recursos estáticos
-                String filePath = new File("src/main/resources/static/uploads" + uploadDir + imagen.getOriginalFilename()).getAbsolutePath();
+                String filePath = new File(uploadDir + "/" + imagen.getOriginalFilename()).getAbsolutePath();
                 File destFile = new File(filePath);
 
                 // Crear directorios si no existen
