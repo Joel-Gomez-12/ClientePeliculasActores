@@ -3,6 +3,7 @@ package es.uah.clientepeliculasactores.service;
 
 import es.uah.clientepeliculasactores.model.Pelicula;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -20,7 +21,8 @@ public class PeliculasServiceImpl implements IPeliculasService {
     @Autowired
     RestTemplate template;
 
-    String url = "http://localhost:8181/peliculas";
+    @Value("${backend.service.url}/peliculas")
+    private String url;
 
     @Override
     public Page<Pelicula> buscarTodas(Pageable pageable) {

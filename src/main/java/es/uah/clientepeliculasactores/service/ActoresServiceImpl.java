@@ -1,6 +1,7 @@
 package es.uah.clientepeliculasactores.service;
 
 import es.uah.clientepeliculasactores.model.Actor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageImpl;
@@ -19,7 +20,8 @@ public class ActoresServiceImpl implements IActoresService {
     @Autowired
     RestTemplate template;
 
-    String url = "http://localhost:8181/actores";
+    @Value("${backend.service.url}/actores")
+    private String url;
 
     @Override
     public Page<Actor> buscarTodos(Pageable pageable) {
